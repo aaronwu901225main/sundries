@@ -159,6 +159,18 @@ def QACollator(batch: List[Dict[str, List[int]]]) -> Dict[str, torch.Tensor]:
         # Implement padding for source and target sequences
         # OR USE sequence packing if you prefer.
         ##########################################
+        input_ids = item["input_ids"]
+        labels = item["labels"]
+        src_len = len(input_ids)
+        src_lens.append(src_len)
+        src_tokens.extend(input_ids)
+        if labels is not None:
+            tgt_len = len(labels)
+            tgt_lens.append(tgt_len)
+            tgt_tokens.extend(labels)
+        else:
+            tgt_lens.append(0)
+        id_s.append(item["id"])
     return {
         "src": torch.tensor(src_tokens, dtype=torch.long),
         "tgt": torch.tensor(tgt_tokens, dtype=torch.long),

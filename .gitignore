@@ -1,0 +1,6 @@
+*.slurm
+*.out
+*.pt
+*/wandb/
+*/__pycache__/
+*/datasets/

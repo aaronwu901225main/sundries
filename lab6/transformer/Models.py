@@ -63,11 +63,14 @@ class Decoder(nn.Module):
 
         super().__init__()
 
-        self.trg_word_emb = ...
-        self.position_enc = ...
-        self.dropout = ...
+        self.trg_word_emb = nn.Embedding(n_trg_vocab, d_word_vec, padding_idx=pad_idx)
+        self.position_enc = PositionalEncoding(d_hid=d_word_vec, n_position=n_position)
+        self.dropout = nn.Dropout(dropout)
         self.flash_attn = flash_attn
-        self.layer_stack = ...
+        self.layer_stack = nn.ModuleList([
+            DecoderLayer_Flash(d_model=d_model, d_inner=d_inner, n_head=n_head, d_qkv=d_k, dropout=dropout)
+            for _ in range(n_layers)
+        ])
         self.layer_norm = nn.LayerNorm(d_model, eps=1e-6)
         self.d_model = d_model
 
@@ -77,6 +80,15 @@ class Decoder(nn.Module):
         # 1. IF flash_attn is True, trg_mask and src_mask are SEQ_LEN tensors.
         # 2. Process will be embedding -> positional encoding -> dropout -> decoder layers -> layer norm
         #########################################
+        x = self.trg_word_emb(trg_seq)
+        if self.flash_attn:
+            x = self.position_enc(x, seq_lens=trg_mask)
+        else:
+            x = self.position_enc(x)
+        x = self.dropout(x)
+        for layer in self.layer_stack:
+            x = layer(x, trg_mask, enc_output, src_mask)
+        dec_output = self.layer_norm(x)
         return dec_output
 from transformers import ModernBertModel, AutoTokenizer
 from transformer.Const import *
@@ -155,7 +167,9 @@ class Seq2SeqModelWithFlashAttn(nn.Module):
             ############# YOUR CODE STARTS HERE #############
             # HINT:
             # USE torch.topk TO GET THE TOP-K LOGITS AND SET OTHERS TO filter_value
-            
+            topk_vals, _ = torch.topk(logits, k=top_k, dim=-1)
+            kth_vals = topk_vals[..., -1].unsqueeze(-1)
+            logits = torch.where(logits < kth_vals, torch.full_like(logits, filter_value), logits)
             ###############################################
             
         
@@ -166,7 +180,17 @@ class Seq2SeqModelWithFlashAttn(nn.Module):
             # 2. CALCULATE SOFTMAX PROBABILITIES UNDER FILTERED LOGITS
             # 3. CALCULATE CUMULATIVE PROBABILITIES
             # 4. SET LOGITS WITH CUMULATIVE PROBABILITIES > top_p TO filter_value
-            
+            sorted_logits, sorted_indices = torch.sort(logits, dim=-1, descending=True)
+            sorted_probs = torch.softmax(sorted_logits, dim=-1)
+            cumulative_probs = torch.cumsum(sorted_probs, dim=-1)
+            sorted_mask = cumulative_probs > top_p
+            # Ensure at least one token is kept for each row
+            sorted_mask[..., 1:] = sorted_mask[..., :-1].clone()
+            sorted_mask[..., 0] = False
+            sorted_logits = torch.where(sorted_mask, torch.full_like(sorted_logits, filter_value), sorted_logits)
+            # Scatter back to original order
+            logits = torch.full_like(logits, filter_value)
+            logits.scatter_(-1, sorted_indices, sorted_logits)
             ###############################################
         return logits # YOU NEED TO RETURN THE FILTERED RAW LOGITS, NOT PROBABILITIES
             
@@ -182,6 +206,24 @@ class Seq2SeqModelWithFlashAttn(nn.Module):
         device = self.output_projection.weight.device
         src_seq_len = src_seq_len.to(device=device, dtype=torch.int32)
         bsz = src_seq_len.size(0)
+        # Encode once
+        dummy_mask = torch.tensor(1, device=input_ids.device)
+        src_cu_seqlens = seqlen2cu_len(src_seq_len)
+        max_src_len = int(src_seq_len.max().item())
+        enc_outputs = self.encoder(
+            input_ids=input_ids,
+            attention_mask=dummy_mask,
+            cu_seqlens=src_cu_seqlens,
+            max_seqlen=max_src_len,
+            batch_size=bsz,
+        )
+        enc_output = enc_outputs["last_hidden_state"]
+        # Init sequences with CLS
+        sequences: List[torch.Tensor] = [
+            torch.tensor([self.tokenizer.cls_token_id], device=device, dtype=torch.long)
+            for _ in range(bsz)
+        ]
+        finished = torch.zeros(bsz, dtype=torch.bool, device=device)
         for _ in range(generation_limit):
             ############### YOUR CODE STARTS HERE #############
             # HINTS:
@@ -190,6 +232,19 @@ class Seq2SeqModelWithFlashAttn(nn.Module):
             # 3. APPLY top_k_top_p_filtering IF sampling IS True
             # 4. UPDATE sequences AND finished FLAGS
             ###################################################
+            trg_seq_len = torch.tensor([len(seq) for seq in sequences], device=device, dtype=torch.int32)
+            trg_input_ids = torch.cat(sequences, dim=0)
+            dec_output = self.decoder(
+                trg_seq=trg_input_ids,
+                trg_mask=trg_seq_len,
+                enc_output=enc_output,
+                src_mask=src_seq_len,
+            )
+            logits = self.output_projection(dec_output)
+            # pick last token logits for each sequence
+            seq_starts = torch.cumsum(trg_seq_len, dim=0) - trg_seq_len
+            last_indices = seq_starts + trg_seq_len - 1
+            next_token_logits = logits[last_indices]
 
             if finished.any():
                 next_token_logits[finished] = -float("inf")
