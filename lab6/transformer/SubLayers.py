@@ -109,16 +109,18 @@ class PositionwiseFeedForward(nn.Module):
 
     def __init__(self, d_in, d_hid, dropout=0.1):
         super().__init__()
-        self.w_1 = nn.Linear(d_in, d_hid) # position-wise
-        self.w_2 = nn.Linear(d_hid, d_in) # position-wise
+        # SwiGLU: first linear outputs 2*d_hid for gating, effective hidden dim remains d_hid
+        self.w_1 = nn.Linear(d_in, 2 * d_hid)
+        self.w_2 = nn.Linear(d_hid, d_in)
         self.layer_norm = nn.LayerNorm(d_in, eps=1e-6)
         self.dropout = nn.Dropout(dropout)
 
     def forward(self, x):
 
         residual = x
-
-        x = self.w_2(F.relu(self.w_1(x)))
+        x_proj = self.w_1(x)
+        x_a, x_b = x_proj.chunk(2, dim=-1)
+        x = self.w_2(F.silu(x_a) * x_b)
         x = self.dropout(x)
         x += residual
 
