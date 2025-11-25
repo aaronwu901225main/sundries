@@ -4,3 +4,6 @@
 */wandb/
 */__pycache__/
 */datasets/
+MPEDANet-pytorch-main/TempCode/dataset/unzip.sh
+*/dataset/
+datasets
