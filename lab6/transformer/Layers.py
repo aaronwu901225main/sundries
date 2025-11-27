@@ -9,13 +9,13 @@ class DecoderLayer_Flash(nn.Module):
         self.enc_attn = MultiHeadCrossAttention_Flash(n_head=n_head, d_model=d_model, d_qkv=d_qkv, dropout=dropout, causal=False)
         self.pos_ffn = PositionwiseFeedForward(d_in=d_model, d_hid=d_inner, dropout=dropout)
 
-    def forward(self, dec_input, dec_seq_lens, enc_output, enc_seq_lens):
+    def forward(self, dec_input, dec_seq_lens, enc_output, enc_seq_lens, enc_kv_precomputed=None):
         #################YOUR CODE HERE#################
         # 1. Self-Attention
         # 2. Encoder-Decoder Attention
         # 3. Position-wise Feed-Forward Network
         ################################################
         x = self.slf_attn(dec_input, dec_seq_lens)
-        x = self.enc_attn(x, enc_output, dec_seq_lens, enc_seq_lens)
+        x = self.enc_attn(x, enc_output, dec_seq_lens, enc_seq_lens, kv_precomputed=enc_kv_precomputed)
         dec_output = self.pos_ffn(x)
         return dec_output

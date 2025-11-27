@@ -60,7 +60,7 @@ class MultiHeadCrossAttention_Flash(nn.Module):
         self.dropout_rate = dropout
         self.layer_norm = nn.LayerNorm(d_model, eps=1e-6)
         self.causal = causal
-    def forward(self, x_q, x_kv, seq_lens_q, seq_lens_kv):
+    def forward(self, x_q, x_kv, seq_lens_q, seq_lens_kv, kv_precomputed: tuple | None = None):
         # x_q should be of shape (total, d_model)
         # x_kv should be of shape (total, d_model)
         # seq_lens_q should be of shape (batch_size,) like (4, 3, 2, 23, 1, ...)
@@ -74,9 +74,12 @@ class MultiHeadCrossAttention_Flash(nn.Module):
         # 3. get max_len_q and max_len_kv from seq_lens_q
         ##################################################
         q = self.w_q(x_q).view(-1, self.n_head, self.d_qkv)
-        kv = self.w_kv(x_kv).view(-1, 2, self.n_head, self.d_qkv)
-        k = kv[:, 0, ...]
-        v = kv[:, 1, ...]
+        if kv_precomputed is not None:
+            k, v = kv_precomputed
+        else:
+            kv = self.w_kv(x_kv).view(-1, 2, self.n_head, self.d_qkv)
+            k = kv[:, 0, ...]
+            v = kv[:, 1, ...]
         cu_seqlens_q = seqlen2cu_len(seq_lens_q.to(dtype=torch.int32, device=x_q.device))
         cu_seqlens_kv = seqlen2cu_len(seq_lens_kv.to(dtype=torch.int32, device=x_q.device))
         max_len_q = int(seq_lens_q.max().item())

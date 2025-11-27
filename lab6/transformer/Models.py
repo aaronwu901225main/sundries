@@ -74,7 +74,7 @@ class Decoder(nn.Module):
         self.layer_norm = nn.LayerNorm(d_model, eps=1e-6)
         self.d_model = d_model
 
-    def forward(self, trg_seq, trg_mask, enc_output, src_mask):
+    def forward(self, trg_seq, trg_mask, enc_output, src_mask, enc_kv_per_layer: Optional[List[tuple]] = None):
         ######### YOUR CODE STARTS HERE #########
         # HINTS:
         # 1. IF flash_attn is True, trg_mask and src_mask are SEQ_LEN tensors.
@@ -86,8 +86,11 @@ class Decoder(nn.Module):
         else:
             x = self.position_enc(x)
         x = self.dropout(x)
-        for layer in self.layer_stack:
-            x = layer(x, trg_mask, enc_output, src_mask)
+        for li, layer in enumerate(self.layer_stack):
+            kv_pre = None
+            if enc_kv_per_layer is not None and li < len(enc_kv_per_layer):
+                kv_pre = enc_kv_per_layer[li]
+            x = layer(x, trg_mask, enc_output, src_mask, enc_kv_precomputed=kv_pre)
         dec_output = self.layer_norm(x)
         return dec_output
 from transformers import ModernBertModel, AutoTokenizer
@@ -126,27 +129,43 @@ class Seq2SeqModelWithFlashAttn(nn.Module):
                 param.requires_grad = False
         self.weight_dtype = weight_dtype
     def forward(self, src_input_ids, trg_input_ids, src_seq_len, trg_seq_len):
-        # src_input and trg_input are assumed to be already tokenized and sequence packed.
-        # src_input and trg_input shape should be (total_seq_len, )
-        # Encode
-        dummy_mask = torch.tensor(1, device=src_input_ids.device)
+        # Support both padded (B, T) and packed (total_T,) inputs.
+        def _ensure_packed(ids, lens):
+            if ids.dim() == 1:
+                return ids
+            # ids: [B, T], lens: [B]
+            parts = []
+            for i in range(ids.size(0)):
+                L = int(lens[i].item())
+                if L > 0:
+                    parts.append(ids[i, :L])
+            if parts:
+                return torch.cat(parts, dim=0)
+            return ids.new_zeros((0,), dtype=ids.dtype)
+
+        src_ids_packed = _ensure_packed(src_input_ids, src_seq_len)
+        trg_ids_packed = _ensure_packed(trg_input_ids, trg_seq_len)
+
+        # Encode (varlen)
+        dummy_mask = torch.tensor(1, device=src_ids_packed.device)
         bsz = src_seq_len.size(0)
         src_cu_seqlens = seqlen2cu_len(src_seq_len)
-        max_src_len = src_seq_len.max().item()
+        max_src_len = int(src_seq_len.max().item())
         enc_outputs = self.encoder(
-            input_ids=src_input_ids,
+            input_ids=src_ids_packed,
             attention_mask=dummy_mask,
             cu_seqlens=src_cu_seqlens,
             max_seqlen=max_src_len,
             batch_size=bsz
         )
-        enc_output = enc_outputs["last_hidden_state"] # shape: (total_src_seq_len, d_model)
-        assert enc_output.size(0) == src_input_ids.size(0), (enc_output.size(), src_input_ids.size())
+        enc_output = enc_outputs["last_hidden_state"]
+
+        # Decoder (varlen)
         dec_output = self.decoder(
-            trg_seq=trg_input_ids,
+            trg_seq=trg_ids_packed,
             trg_mask=trg_seq_len,
             enc_output=enc_output,
-            src_mask=src_seq_len
+            src_mask=src_seq_len,
         )
         # Project to vocabulary
         logits = self.output_projection(dec_output)
@@ -204,7 +223,16 @@ class Seq2SeqModelWithFlashAttn(nn.Module):
         top_p: float = 0.9,
     ) -> List[str]:
         device = self.output_projection.weight.device
+        # Support padded src at inference
         src_seq_len = src_seq_len.to(device=device, dtype=torch.int32)
+        if input_ids.dim() == 2:
+            # pack
+            parts = []
+            for i in range(input_ids.size(0)):
+                L = int(src_seq_len[i].item())
+                if L > 0:
+                    parts.append(input_ids[i, :L])
+            input_ids = torch.cat(parts, dim=0) if parts else input_ids.new_zeros((0,), dtype=input_ids.dtype)
         bsz = src_seq_len.size(0)
         # Encode once
         dummy_mask = torch.tensor(1, device=input_ids.device)
@@ -218,6 +246,14 @@ class Seq2SeqModelWithFlashAttn(nn.Module):
             batch_size=bsz,
         )
         enc_output = enc_outputs["last_hidden_state"]
+
+        # Precompute encoder K/V per decoder layer to avoid recomputation each step
+        enc_kv_per_layer: List[tuple] = []
+        for layer in self.decoder.layer_stack:
+            kv = layer.enc_attn.w_kv(enc_output).view(-1, 2, layer.enc_attn.n_head, layer.enc_attn.d_qkv)
+            k = kv[:, 0, ...]
+            v = kv[:, 1, ...]
+            enc_kv_per_layer.append((k, v))
         # Init sequences with CLS
         sequences: List[torch.Tensor] = [
             torch.tensor([self.tokenizer.cls_token_id], device=device, dtype=torch.long)
@@ -239,6 +275,7 @@ class Seq2SeqModelWithFlashAttn(nn.Module):
                 trg_mask=trg_seq_len,
                 enc_output=enc_output,
                 src_mask=src_seq_len,
+                enc_kv_per_layer=enc_kv_per_layer,
             )
             logits = self.output_projection(dec_output)
             # pick last token logits for each sequence

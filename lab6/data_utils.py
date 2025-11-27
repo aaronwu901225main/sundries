@@ -147,13 +147,26 @@ class SquadSeq2SeqDataset(Dataset):
         }
         
 def QACollator(batch: List[Dict[str, List[int]]]) -> Dict[str, torch.Tensor]:
+    """Pad sequences to max length in batch and return tensors.
+
+    Returns:
+        - src: LongTensor [B, S_max]
+        - tgt: LongTensor [B, T_max] (may be empty if labels missing)
+        - src_len: IntTensor [B]
+        - tgt_len: IntTensor [B]
+        - id: list[str]
+    """
     if not batch:
         raise ValueError("Empty batch provided to collator.")
-    src_tokens: List[int] = []
-    tgt_tokens: List[int] = []
+
+    pad_id = PAD_ID
+
+    src_seqs: List[List[int]] = []
+    tgt_seqs: List[Optional[List[int]]] = []
     src_lens: List[int] = []
     tgt_lens: List[int] = []
-    id_s = []
+    ids: List[str] = []
+
     for item in batch:
         ############# YOUR CODE HERE #############
         # Implement padding for source and target sequences
@@ -161,22 +174,37 @@ def QACollator(batch: List[Dict[str, List[int]]]) -> Dict[str, torch.Tensor]:
         ##########################################
         input_ids = item["input_ids"]
         labels = item["labels"]
-        src_len = len(input_ids)
-        src_lens.append(src_len)
-        src_tokens.extend(input_ids)
+        src_seqs.append(input_ids)
+        src_lens.append(len(input_ids))
         if labels is not None:
-            tgt_len = len(labels)
-            tgt_lens.append(tgt_len)
-            tgt_tokens.extend(labels)
+            tgt_seqs.append(labels)
+            tgt_lens.append(len(labels))
         else:
+            tgt_seqs.append(None)
             tgt_lens.append(0)
-        id_s.append(item["id"])
+        ids.append(item["id"])
+
+    B = len(batch)
+    S_max = max(src_lens) if src_lens else 0
+    T_max = max(tgt_lens) if tgt_lens else 0
+
+    src_tensor = torch.full((B, S_max), pad_id, dtype=torch.long)
+    tgt_tensor = torch.full((B, max(T_max, 1)), pad_id, dtype=torch.long)  # keep at least width 1
+
+    for i in range(B):
+        l = src_lens[i]
+        if l > 0:
+            src_tensor[i, :l] = torch.tensor(src_seqs[i], dtype=torch.long)
+        tl = tgt_lens[i]
+        if tl > 0 and tgt_seqs[i] is not None:
+            tgt_tensor[i, :tl] = torch.tensor(tgt_seqs[i], dtype=torch.long)
+
     return {
-        "src": torch.tensor(src_tokens, dtype=torch.long),
-        "tgt": torch.tensor(tgt_tokens, dtype=torch.long),
+        "src": src_tensor,
+        "tgt": tgt_tensor,
         "src_len": torch.tensor(src_lens, dtype=torch.int32),
         "tgt_len": torch.tensor(tgt_lens, dtype=torch.int32),
-        "id": id_s,
+        "id": ids,
     }
 
 def write_predictions_csv(path: Path, predictions: List[Tuple[str, str]]) -> None:
