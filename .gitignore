@@ -7,3 +7,6 @@
 MPEDANet-pytorch-main/TempCode/dataset/unzip.sh
 */dataset/
 datasets
+data
+resized_flowers102
+GENIMG
