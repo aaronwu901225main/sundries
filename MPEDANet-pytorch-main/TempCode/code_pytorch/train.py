@@ -13,6 +13,7 @@ from tqdm import tqdm
 =============================自己的包===========================
 """
 from BraTS2021 import *
+from BraTS2023 import BraTS2023, CenterCrop as CenterCrop2023, ToTensor as ToTensor2023, RandomRotFlip as RandomRotFlip2023, GaussianNoise as GaussianNoise2023
 from utils import Loss, cal_dice
 
 from networks.MyNet.MyNet import MyNet
@@ -141,16 +142,30 @@ def main(args):
 
     # data info
     patch_size = (128, 128, 64)
-    train_dataset = BraTS2021(args.data_path, args.train_txt, transform=transforms.Compose([
-        RandomRotFlip(),
-        CenterCrop(patch_size),
-        GaussianNoise(p=0.1),
-        ToTensor()
-    ]))
-    val_dataset = BraTS2021(args.data_path, args.valid_txt, transform=transforms.Compose([
-        CenterCrop(patch_size),
-        ToTensor()
-    ]))
+    if args.dataset == 'brats2021':
+        train_dataset = BraTS2021(args.data_path, args.train_txt, transform=transforms.Compose([
+            RandomRotFlip(),
+            CenterCrop(patch_size),
+            GaussianNoise(p=0.1),
+            ToTensor()
+        ]))
+        val_dataset = BraTS2021(args.data_path, args.valid_txt, transform=transforms.Compose([
+            CenterCrop(patch_size),
+            ToTensor()
+        ]))
+    elif args.dataset == 'brats2023':
+        train_dataset = BraTS2023(args.data_path, args.train_txt, transform=transforms.Compose([
+            RandomRotFlip(),
+            CenterCrop2023(patch_size),
+            GaussianNoise(p=0.1),
+            ToTensor()
+        ]))
+        val_dataset = BraTS2023(args.data_path, args.valid_txt, transform=transforms.Compose([
+            CenterCrop2023(patch_size),
+            ToTensor()
+        ]))
+    else:
+        raise ValueError(f"Unsupported dataset: {args.dataset}")
     # test_dataset = BraTS2021(args.data_path, args.test_txt, transform=transforms.Compose([
     #     CenterCrop(patch_size),
     #     ToTensor()
@@ -235,6 +250,7 @@ if __name__ == '__main__':
     parser.add_argument('--batch_size', type=int, default=1)
     parser.add_argument('--lr', type=float, default=1e-3)
     parser.add_argument('--min_lr', type=float, default=0.002)
+    parser.add_argument('--dataset', type=str, default='brats2021', choices=['brats2021','brats2023'])
     parser.add_argument('--data_path', type=str, default='../dataset/brats2021/data')
     parser.add_argument('--train_txt', type=str, default='../dataset/brats2021/train.txt')
     parser.add_argument('--valid_txt', type=str, default='../dataset/brats2021/valid.txt')

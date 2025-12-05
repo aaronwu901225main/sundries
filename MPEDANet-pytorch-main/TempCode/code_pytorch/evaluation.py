@@ -14,6 +14,7 @@ from tqdm import tqdm
 from BraTS2021 import *
 from BraTS2018 import *
 from BraTS2019 import *
+from BraTS2023 import BraTS2023, CenterCrop as CenterCrop2023, ToTensor as ToTensor2023
 from utils import *
 
 from networks.MyNet.MyNet import MyNet
@@ -132,14 +133,27 @@ def main(args):
     #     GaussianNoise(p=0.1),
     #     ToTensor()
     # ]))
-    val_dataset = BraTS2021(args.data_path, args.valid_txt, transform=transforms.Compose([
-        CenterCrop(patch_size),
-        ToTensor()
-    ]))
-    # test_dataset = BraTS2021(args.data_path, args.test_txt, transform=transforms.Compose([
-    #     CenterCrop(patch_size),
-    #     ToTensor()
-    # ]))
+    if args.dataset == 'brats2021':
+        val_dataset = BraTS2021(args.data_path, args.valid_txt, transform=transforms.Compose([
+            CenterCrop(patch_size),
+            ToTensor()
+        ]))
+        test_dataset = BraTS2021(args.data_path, args.test_txt, transform=transforms.Compose([
+            CenterCrop(patch_size),
+            ToTensor()
+        ]))
+    elif args.dataset == 'brats2023':
+        val_dataset = BraTS2023(args.data_path, args.valid_txt, transform=transforms.Compose([
+            CenterCrop2023(patch_size),
+            ToTensor()
+        ]))
+        test_dataset = BraTS2023(args.data_path, args.test_txt, transform=transforms.Compose([
+            CenterCrop2023(patch_size),
+            ToTensor()
+        ]))
+    else:
+        raise ValueError(f"Unsupported dataset: {args.dataset}")
+    '''
     data_path = "../dataset/brats2019/data"
     patch_size = (128, 128, 64)
     test_dataset = BraTS2019(data_path, transform=transforms.Compose([
@@ -148,6 +162,7 @@ def main(args):
         GaussianNoise(p=0.1),
         ToTensor()
     ]))
+    '''
     # train_loader = DataLoader(dataset=train_dataset, batch_size=args.batch_size, num_workers=8,  # num_worker=4
     #                           shuffle=True, pin_memory=True)
     val_loader = DataLoader(dataset=val_dataset, batch_size=args.batch_size, num_workers=8, shuffle=False,
@@ -238,6 +253,7 @@ if __name__ == '__main__':
     parser.add_argument('--batch_size', type=int, default=1)
     parser.add_argument('--lr', type=float, default=1e-3)
     parser.add_argument('--min_lr', type=float, default=0.002)
+    parser.add_argument('--dataset', type=str, default='brats2021', choices=['brats2021','brats2023'])
     parser.add_argument('--data_path', type=str, default='../dataset/brats2021/data')
     # parser.add_argument('--val_data_path', type=str, default='../dataset/brats2020/val_data/data')
     parser.add_argument('--train_txt', type=str, default='../dataset/brats2021/train.txt')
