@@ -1,0 +1,180 @@
+Epoch:[1/90] train_loss: 0.388 valid_loss: 0.262 
+Train--ET: 0.591 TC: 0.603 WT: 0.752  Valid--ET: 0.696 TC: 0.709 WT: 0.806 
+Epoch:[2/90] train_loss: 0.259 valid_loss: 0.254 
+Train--ET: 0.650 TC: 0.662 WT: 0.806  Valid--ET: 0.702 TC: 0.681 WT: 0.815 
+Epoch:[3/90] train_loss: 0.237 valid_loss: 0.224 
+Train--ET: 0.673 TC: 0.681 WT: 0.823  Valid--ET: 0.733 TC: 0.730 WT: 0.826 
+Epoch:[4/90] train_loss: 0.228 valid_loss: 0.203 
+Train--ET: 0.690 TC: 0.693 WT: 0.833  Valid--ET: 0.759 TC: 0.750 WT: 0.845 
+Epoch:[5/90] train_loss: 0.213 valid_loss: 0.224 
+Train--ET: 0.699 TC: 0.709 WT: 0.844  Valid--ET: 0.716 TC: 0.733 WT: 0.823 
+Epoch:[6/90] train_loss: 0.206 valid_loss: 0.217 
+Train--ET: 0.707 TC: 0.722 WT: 0.847  Valid--ET: 0.734 TC: 0.749 WT: 0.856 
+Epoch:[7/90] train_loss: 0.200 valid_loss: 0.204 
+Train--ET: 0.705 TC: 0.726 WT: 0.851  Valid--ET: 0.759 TC: 0.767 WT: 0.837 
+Epoch:[8/90] train_loss: 0.197 valid_loss: 0.201 
+Train--ET: 0.712 TC: 0.735 WT: 0.849  Valid--ET: 0.765 TC: 0.775 WT: 0.839 
+Epoch:[9/90] train_loss: 0.186 valid_loss: 0.171 
+Train--ET: 0.717 TC: 0.751 WT: 0.861  Valid--ET: 0.784 TC: 0.803 WT: 0.876 
+Epoch:[10/90] train_loss: 0.187 valid_loss: 0.181 
+Train--ET: 0.719 TC: 0.745 WT: 0.861  Valid--ET: 0.755 TC: 0.784 WT: 0.848 
+Epoch:[11/90] train_loss: 0.184 valid_loss: 0.176 
+Train--ET: 0.719 TC: 0.756 WT: 0.861  Valid--ET: 0.769 TC: 0.796 WT: 0.851 
+Epoch:[12/90] train_loss: 0.186 valid_loss: 0.182 
+Train--ET: 0.720 TC: 0.749 WT: 0.858  Valid--ET: 0.761 TC: 0.792 WT: 0.843 
+Epoch:[13/90] train_loss: 0.183 valid_loss: 0.199 
+Train--ET: 0.717 TC: 0.751 WT: 0.858  Valid--ET: 0.736 TC: 0.743 WT: 0.846 
+Epoch:[14/90] train_loss: 0.176 valid_loss: 0.183 
+Train--ET: 0.725 TC: 0.763 WT: 0.869  Valid--ET: 0.723 TC: 0.783 WT: 0.870 
+Epoch:[15/90] train_loss: 0.174 valid_loss: 0.163 
+Train--ET: 0.723 TC: 0.764 WT: 0.869  Valid--ET: 0.778 TC: 0.816 WT: 0.866 
+Epoch:[16/90] train_loss: 0.172 valid_loss: 0.165 
+Train--ET: 0.727 TC: 0.767 WT: 0.874  Valid--ET: 0.785 TC: 0.820 WT: 0.875 
+Epoch:[17/90] train_loss: 0.171 valid_loss: 0.172 
+Train--ET: 0.729 TC: 0.766 WT: 0.872  Valid--ET: 0.771 TC: 0.796 WT: 0.857 
+Epoch:[18/90] train_loss: 0.169 valid_loss: 0.174 
+Train--ET: 0.729 TC: 0.773 WT: 0.874  Valid--ET: 0.776 TC: 0.825 WT: 0.854 
+Epoch:[19/90] train_loss: 0.171 valid_loss: 0.170 
+Train--ET: 0.729 TC: 0.767 WT: 0.872  Valid--ET: 0.773 TC: 0.809 WT: 0.865 
+Epoch:[20/90] train_loss: 0.168 valid_loss: 0.155 
+Train--ET: 0.734 TC: 0.777 WT: 0.874  Valid--ET: 0.792 TC: 0.835 WT: 0.878 
+Epoch:[21/90] train_loss: 0.166 valid_loss: 0.164 
+Train--ET: 0.732 TC: 0.776 WT: 0.874  Valid--ET: 0.778 TC: 0.828 WT: 0.874 
+Epoch:[22/90] train_loss: 0.166 valid_loss: 0.152 
+Train--ET: 0.733 TC: 0.781 WT: 0.874  Valid--ET: 0.785 TC: 0.834 WT: 0.888 
+Epoch:[23/90] train_loss: 0.162 valid_loss: 0.175 
+Train--ET: 0.737 TC: 0.780 WT: 0.881  Valid--ET: 0.790 TC: 0.797 WT: 0.876 
+Epoch:[24/90] train_loss: 0.161 valid_loss: 0.153 
+Train--ET: 0.733 TC: 0.783 WT: 0.879  Valid--ET: 0.780 TC: 0.815 WT: 0.871 
+Epoch:[25/90] train_loss: 0.168 valid_loss: 0.163 
+Train--ET: 0.731 TC: 0.774 WT: 0.872  Valid--ET: 0.779 TC: 0.816 WT: 0.858 
+Epoch:[26/90] train_loss: 0.159 valid_loss: 0.180 
+Train--ET: 0.734 TC: 0.787 WT: 0.880  Valid--ET: 0.783 TC: 0.799 WT: 0.853 
+Epoch:[27/90] train_loss: 0.159 valid_loss: 0.166 
+Train--ET: 0.735 TC: 0.783 WT: 0.882  Valid--ET: 0.795 TC: 0.816 WT: 0.883 
+Epoch:[28/90] train_loss: 0.160 valid_loss: 0.156 
+Train--ET: 0.738 TC: 0.783 WT: 0.880  Valid--ET: 0.789 TC: 0.820 WT: 0.878 
+Epoch:[29/90] train_loss: 0.162 valid_loss: 0.166 
+Train--ET: 0.734 TC: 0.781 WT: 0.882  Valid--ET: 0.763 TC: 0.794 WT: 0.874 
+Epoch:[30/90] train_loss: 0.157 valid_loss: 0.166 
+Train--ET: 0.735 TC: 0.792 WT: 0.884  Valid--ET: 0.777 TC: 0.802 WT: 0.881 
+Epoch:[31/90] train_loss: 0.156 valid_loss: 0.155 
+Train--ET: 0.741 TC: 0.790 WT: 0.884  Valid--ET: 0.792 TC: 0.840 WT: 0.881 
+Epoch:[32/90] train_loss: 0.158 valid_loss: 0.168 
+Train--ET: 0.739 TC: 0.786 WT: 0.886  Valid--ET: 0.783 TC: 0.811 WT: 0.864 
+Epoch:[33/90] train_loss: 0.156 valid_loss: 0.164 
+Train--ET: 0.743 TC: 0.793 WT: 0.884  Valid--ET: 0.789 TC: 0.814 WT: 0.883 
+Epoch:[34/90] train_loss: 0.158 valid_loss: 0.156 
+Train--ET: 0.733 TC: 0.783 WT: 0.880  Valid--ET: 0.788 TC: 0.822 WT: 0.886 
+Epoch:[35/90] train_loss: 0.156 valid_loss: 0.163 
+Train--ET: 0.738 TC: 0.790 WT: 0.885  Valid--ET: 0.759 TC: 0.796 WT: 0.855 
+Epoch:[36/90] train_loss: 0.156 valid_loss: 0.153 
+Train--ET: 0.737 TC: 0.788 WT: 0.884  Valid--ET: 0.767 TC: 0.827 WT: 0.886 
+Epoch:[37/90] train_loss: 0.147 valid_loss: 0.140 
+Train--ET: 0.739 TC: 0.807 WT: 0.894  Valid--ET: 0.791 TC: 0.844 WT: 0.897 
+Epoch:[38/90] train_loss: 0.140 valid_loss: 0.138 
+Train--ET: 0.752 TC: 0.813 WT: 0.898  Valid--ET: 0.797 TC: 0.849 WT: 0.899 
+Epoch:[39/90] train_loss: 0.137 valid_loss: 0.136 
+Train--ET: 0.756 TC: 0.818 WT: 0.899  Valid--ET: 0.799 TC: 0.851 WT: 0.900 
+Epoch:[40/90] train_loss: 0.135 valid_loss: 0.135 
+Train--ET: 0.759 TC: 0.819 WT: 0.902  Valid--ET: 0.801 TC: 0.853 WT: 0.901 
+Epoch:[41/90] train_loss: 0.135 valid_loss: 0.135 
+Train--ET: 0.758 TC: 0.820 WT: 0.901  Valid--ET: 0.802 TC: 0.854 WT: 0.901 
+Epoch:[42/90] train_loss: 0.133 valid_loss: 0.134 
+Train--ET: 0.759 TC: 0.821 WT: 0.902  Valid--ET: 0.803 TC: 0.855 WT: 0.901 
+Epoch:[43/90] train_loss: 0.133 valid_loss: 0.134 
+Train--ET: 0.760 TC: 0.822 WT: 0.903  Valid--ET: 0.803 TC: 0.855 WT: 0.901 
+Epoch:[44/90] train_loss: 0.132 valid_loss: 0.133 
+Train--ET: 0.760 TC: 0.823 WT: 0.904  Valid--ET: 0.804 TC: 0.856 WT: 0.901 
+Epoch:[45/90] train_loss: 0.132 valid_loss: 0.133 
+Train--ET: 0.761 TC: 0.823 WT: 0.903  Valid--ET: 0.804 TC: 0.856 WT: 0.901 
+Epoch:[46/90] train_loss: 0.130 valid_loss: 0.133 
+Train--ET: 0.760 TC: 0.824 WT: 0.905  Valid--ET: 0.805 TC: 0.857 WT: 0.901 
+Epoch:[47/90] train_loss: 0.131 valid_loss: 0.133 
+Train--ET: 0.762 TC: 0.823 WT: 0.904  Valid--ET: 0.805 TC: 0.857 WT: 0.901 
+Epoch:[48/90] train_loss: 0.130 valid_loss: 0.132 
+Train--ET: 0.762 TC: 0.824 WT: 0.905  Valid--ET: 0.805 TC: 0.858 WT: 0.902 
+Epoch:[49/90] train_loss: 0.130 valid_loss: 0.132 
+Train--ET: 0.761 TC: 0.826 WT: 0.906  Valid--ET: 0.806 TC: 0.858 WT: 0.901 
+Epoch:[50/90] train_loss: 0.129 valid_loss: 0.132 
+Train--ET: 0.762 TC: 0.826 WT: 0.906  Valid--ET: 0.806 TC: 0.858 WT: 0.901 
+Epoch:[51/90] train_loss: 0.129 valid_loss: 0.132 
+Train--ET: 0.763 TC: 0.826 WT: 0.906  Valid--ET: 0.806 TC: 0.859 WT: 0.901 
+Epoch:[52/90] train_loss: 0.128 valid_loss: 0.131 
+Train--ET: 0.762 TC: 0.827 WT: 0.907  Valid--ET: 0.806 TC: 0.859 WT: 0.902 
+Epoch:[53/90] train_loss: 0.129 valid_loss: 0.131 
+Train--ET: 0.762 TC: 0.826 WT: 0.905  Valid--ET: 0.806 TC: 0.859 WT: 0.902 
+Epoch:[54/90] train_loss: 0.128 valid_loss: 0.131 
+Train--ET: 0.763 TC: 0.828 WT: 0.907  Valid--ET: 0.807 TC: 0.860 WT: 0.901 
+Epoch:[55/90] train_loss: 0.128 valid_loss: 0.131 
+Train--ET: 0.763 TC: 0.827 WT: 0.906  Valid--ET: 0.807 TC: 0.860 WT: 0.901 
+Epoch:[56/90] train_loss: 0.128 valid_loss: 0.131 
+Train--ET: 0.764 TC: 0.829 WT: 0.906  Valid--ET: 0.808 TC: 0.860 WT: 0.901 
+Epoch:[57/90] train_loss: 0.128 valid_loss: 0.131 
+Train--ET: 0.763 TC: 0.828 WT: 0.907  Valid--ET: 0.807 TC: 0.860 WT: 0.901 
+Epoch:[58/90] train_loss: 0.127 valid_loss: 0.131 
+Train--ET: 0.763 TC: 0.829 WT: 0.907  Valid--ET: 0.807 TC: 0.860 WT: 0.901 
+Epoch:[59/90] train_loss: 0.128 valid_loss: 0.130 
+Train--ET: 0.763 TC: 0.829 WT: 0.906  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[60/90] train_loss: 0.127 valid_loss: 0.130 
+Train--ET: 0.764 TC: 0.829 WT: 0.908  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[61/90] train_loss: 0.127 valid_loss: 0.130 
+Train--ET: 0.764 TC: 0.830 WT: 0.908  Valid--ET: 0.808 TC: 0.861 WT: 0.901 
+Epoch:[62/90] train_loss: 0.126 valid_loss: 0.130 
+Train--ET: 0.765 TC: 0.831 WT: 0.908  Valid--ET: 0.807 TC: 0.861 WT: 0.902 
+Epoch:[63/90] train_loss: 0.127 valid_loss: 0.130 
+Train--ET: 0.766 TC: 0.830 WT: 0.906  Valid--ET: 0.807 TC: 0.861 WT: 0.902 
+Epoch:[64/90] train_loss: 0.127 valid_loss: 0.130 
+Train--ET: 0.763 TC: 0.829 WT: 0.907  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[65/90] train_loss: 0.127 valid_loss: 0.130 
+Train--ET: 0.765 TC: 0.831 WT: 0.907  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[66/90] train_loss: 0.126 valid_loss: 0.130 
+Train--ET: 0.765 TC: 0.831 WT: 0.908  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[67/90] train_loss: 0.125 valid_loss: 0.130 
+Train--ET: 0.766 TC: 0.833 WT: 0.909  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[68/90] train_loss: 0.125 valid_loss: 0.130 
+Train--ET: 0.765 TC: 0.831 WT: 0.909  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[69/90] train_loss: 0.125 valid_loss: 0.130 
+Train--ET: 0.766 TC: 0.832 WT: 0.909  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[70/90] train_loss: 0.125 valid_loss: 0.130 
+Train--ET: 0.765 TC: 0.832 WT: 0.909  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[71/90] train_loss: 0.126 valid_loss: 0.130 
+Train--ET: 0.765 TC: 0.832 WT: 0.908  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[72/90] train_loss: 0.125 valid_loss: 0.130 
+Train--ET: 0.765 TC: 0.832 WT: 0.908  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[73/90] train_loss: 0.125 valid_loss: 0.130 
+Train--ET: 0.767 TC: 0.833 WT: 0.909  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[74/90] train_loss: 0.126 valid_loss: 0.130 
+Train--ET: 0.765 TC: 0.831 WT: 0.907  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[75/90] train_loss: 0.126 valid_loss: 0.130 
+Train--ET: 0.765 TC: 0.831 WT: 0.908  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[76/90] train_loss: 0.125 valid_loss: 0.130 
+Train--ET: 0.766 TC: 0.832 WT: 0.909  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[77/90] train_loss: 0.126 valid_loss: 0.130 
+Train--ET: 0.766 TC: 0.831 WT: 0.908  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[78/90] train_loss: 0.126 valid_loss: 0.130 
+Train--ET: 0.765 TC: 0.831 WT: 0.908  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[79/90] train_loss: 0.126 valid_loss: 0.130 
+Train--ET: 0.766 TC: 0.832 WT: 0.908  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[80/90] train_loss: 0.126 valid_loss: 0.130 
+Train--ET: 0.765 TC: 0.831 WT: 0.908  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[81/90] train_loss: 0.126 valid_loss: 0.130 
+Train--ET: 0.765 TC: 0.831 WT: 0.908  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[82/90] train_loss: 0.125 valid_loss: 0.130 
+Train--ET: 0.766 TC: 0.832 WT: 0.909  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[83/90] train_loss: 0.125 valid_loss: 0.130 
+Train--ET: 0.765 TC: 0.831 WT: 0.909  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[84/90] train_loss: 0.126 valid_loss: 0.130 
+Train--ET: 0.765 TC: 0.831 WT: 0.907  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[85/90] train_loss: 0.126 valid_loss: 0.130 
+Train--ET: 0.766 TC: 0.832 WT: 0.907  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[86/90] train_loss: 0.126 valid_loss: 0.130 
+Train--ET: 0.765 TC: 0.831 WT: 0.908  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[87/90] train_loss: 0.125 valid_loss: 0.130 
+Train--ET: 0.766 TC: 0.831 WT: 0.909  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[88/90] train_loss: 0.126 valid_loss: 0.130 
+Train--ET: 0.766 TC: 0.832 WT: 0.908  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[89/90] train_loss: 0.125 valid_loss: 0.130 
+Train--ET: 0.765 TC: 0.832 WT: 0.908  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
+Epoch:[90/90] train_loss: 0.125 valid_loss: 0.130 
+Train--ET: 0.765 TC: 0.833 WT: 0.909  Valid--ET: 0.807 TC: 0.860 WT: 0.902 
