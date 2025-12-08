@@ -7,7 +7,7 @@ train_data_path = "../dataset/brats2023_part_2/data"
 ids = sorted([d for d in os.listdir(train_data_path) if d.startswith("BraTS-GLI-")])
 print(f"Found {len(ids)} cases under {train_data_path}")
 
-train_ids, val_test_ids = train_test_split(ids, test_size=0.2, random_state=21)
+train_ids, val_test_ids = train_test_split(ids, train_size=500, random_state=21)
 val_ids, test_ids = train_test_split(val_test_ids, test_size=0.5, random_state=21)
 print("Using {} images for training, {} images for validation, {} images for testing.".format(
     len(train_ids), len(val_ids), len(test_ids)))
