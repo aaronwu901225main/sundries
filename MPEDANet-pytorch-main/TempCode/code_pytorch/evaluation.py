@@ -234,7 +234,7 @@ def main(args):
 
 
 if __name__ == '__main__':
-    # MODEL_NAME = 'MyNet'
+    MODEL_NAME = 'MyNet'
     # MODEL_NAME = 'PeirisHimashi'
     # MODEL_NAME = 'Yi_Ding'
     # MODEL_NAME = 'Zhengrong_Luo'

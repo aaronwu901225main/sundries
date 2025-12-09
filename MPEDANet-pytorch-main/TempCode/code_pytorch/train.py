@@ -240,7 +240,7 @@ if __name__ == '__main__':
     # MODEL_NAME = 'ChenChen'
     # MODEL_NAME = 'lslam'
     # MODEL_NAME = 'baseline'
-    # MODEL_NAME = 'baselineMRF'
+    MODEL_NAME = 'baselineMRF'
     # MODEL_NAME = 'baselineRSA'
     parser = argparse.ArgumentParser()
     parser.add_argument('--num_classes', type=int, default=4)
