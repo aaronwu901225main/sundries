@@ -13,3 +13,4 @@ resized_flowers102
 GENIMG
 checkpoint
 MyNet.pth
+wandb

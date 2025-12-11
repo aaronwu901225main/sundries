@@ -232,7 +232,7 @@ def main(args):
 if __name__ == '__main__':
     # MODEL_NAME = 'ZhaoXiangYu'
     # MODEL_NAME = 'MyNet' # 論文中的模型
-    # MODEL_NAME = 'PeirisHimashi'
+    MODEL_NAME = 'PeirisHimashi'
     # MODEL_NAME = 'Yi_Ding'
     # MODEL_NAME = 'Zhengrong_Luo'
     # MODEL_NAME = 'LiuLiangLiang'
@@ -240,7 +240,7 @@ if __name__ == '__main__':
     # MODEL_NAME = 'ChenChen'
     # MODEL_NAME = 'lslam'
     # MODEL_NAME = 'baseline'
-    MODEL_NAME = 'baselineMRF'
+    # MODEL_NAME = 'baselineMRF'
     # MODEL_NAME = 'baselineRSA'
     parser = argparse.ArgumentParser()
     parser.add_argument('--num_classes', type=int, default=4)
